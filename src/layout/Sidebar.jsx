@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import TwitterLogo from "../images/Twitter.svg";
 import { 
     HomeIcon, 
@@ -22,6 +22,7 @@ import {
     SearchIcon 
 } from '../icons/Icon';
 import SideLink from '../components/SideLink';
+import UserBox from '../components/UserBox';
 
 const sideLinks=[
     {
@@ -59,16 +60,21 @@ const sideLinks=[
 ];
 
 const Sidebar = () => {
+    const [active,setActive]=useState("Home");
+
+    const  handleMenuItemClick=(name)=>{
+        setActive(name);//seçili olan companentin name ini active ye kaydediyoruz
+    }
     return (
         <div className="flex flex-col justify-between w-72  px-2">
             <div>
-                <div className="mt-1 mb-4 ml-1 hover:bg-gray-lightest w-12 h-12 rounded-full flex items-center justify-center">
+                <div className="mt-1 mb-2 ml-1 hover:bg-gray-lightest w-12 h-12 rounded-full flex items-center justify-center">
                 <img src={TwitterLogo} alt="Twitter Logo" className="w-9 h-9"/>
                 </div>
-                <nav className="mb-4">
+                <nav className="mb-2">
                     <ul>
                         {sideLinks.map(({name,icon})=>(
-                            <SideLink key={name} name={name} Icon={icon}/>//icon aslında bir function companent olduğu için companentleri props olarak geçerken büyük harfle isimlendirilir
+                            <SideLink key={name} name={name} Icon={icon} active={active} onMenuItemClick={handleMenuItemClick}/>//icon aslında bir function companent olduğu için companentleri props olarak geçerken büyük harfle isimlendirilir
                         ))}
                     </ul>
                 </nav>
@@ -77,7 +83,7 @@ const Sidebar = () => {
                 </button>
             </div>
 
-            <div>Users</div>
+            <UserBox/>
 
         </div>
     )
